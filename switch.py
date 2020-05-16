@@ -58,7 +58,9 @@ class PIKIntercomSwitch(PIKIntercomEntity, SwitchEntity):
 
     def turn_on(self, **kwargs):
         """Open intercom"""
-        self._intercom.open()
+        result = self._intercom.open()
+        if not result:
+            raise Exception("failed")
 
         now = dt_util.utcnow()
         self._assume_off = now + self._time

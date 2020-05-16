@@ -26,11 +26,12 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
         intercoms.extend(apart.intercoms())
     
     for i in intercoms:
-        entities.append(
-            PIKIntercomCamera(
-                i,
+        if i.video():
+            entities.append(
+                PIKIntercomCamera(
+                    i,
+                )
             )
-        )
 
     add_entities(entities)
 
@@ -47,6 +48,7 @@ class PIKIntercomCamera(PIKIntercomEntity, Camera):
         super().__init__(pik_intercom)
         self._stream_url = pik_intercom.video()
         self._last_image = None
+        self.is_streaming = True
         self._supported_features = SUPPORT_STREAM if self._stream_url else 0
         self._interval = interval or datetime.timedelta
         self._last_update = datetime.datetime.min

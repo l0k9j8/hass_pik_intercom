@@ -1,8 +1,8 @@
 {
   "domain": "pik_intercom",
   "name": "Intercom PIK",
-  "documentation": "https://www.home-assistant.io/integrations/pik_intercom",
-  "requirements": [],
+  "documentation": "https://github.com/l0k9j8/hass_pik_intercom",
+  "requirements": ["requests"],
   "dependencies": [],
   "codeowners": [
     "@l0k9j8"
