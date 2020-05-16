@@ -28,5 +28,5 @@ stream:
 -[ ] события вызова с домофона
 
 
-![Пример работы:](https://github.com/l0k9j8/hass_pik_intercom/raw/master/demo.png)
+**Пример работы:** ![demo](https://github.com/l0k9j8/hass_pik_intercom/raw/master/demo.png)
 
