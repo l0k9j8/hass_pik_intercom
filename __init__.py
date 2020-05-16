@@ -19,7 +19,7 @@ DEVICE_SCHEMA = vol.Schema(
 )
 
 CONFIG_SCHEMA = vol.Schema(
-        {DOMAIN:vol.All(cv.ensure_list, [DEVICE_SCHEMA])}, 
+    {DOMAIN: vol.All(cv.ensure_list, [DEVICE_SCHEMA])},
     extra=vol.ALLOW_EXTRA)
 
 PLATFORMS = ["switch", "camera"]
@@ -40,4 +40,3 @@ def setup(hass: HomeAssistant, config: dict):
     hass.data[DOMAIN] = {'account': Account(login, password, dev_id)}
 
     return True
-

@@ -24,7 +24,7 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
     entities = []
     for apart in acc.apartments():
         intercoms.extend(apart.intercoms())
-    
+
     for i in intercoms:
         if i.video():
             entities.append(

@@ -2,7 +2,11 @@
 import datetime
 import logging
 
-from homeassistant.components.switch import SwitchEntity
+try:
+    from homeassistant.components.switch import SwitchEntity
+except ImportError:
+    from homeassistant.components.switch import SwitchDevice as SwitchEntity
+
 import homeassistant.util.dt as dt_util
 
 from .const import DOMAIN
@@ -17,7 +21,7 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
     entities = []
     for apart in acc.apartments():
         intercoms.extend(apart.intercoms())
-    
+
     for i in intercoms:
         entities.append(
             PIKIntercomSwitch(
@@ -61,6 +65,7 @@ class PIKIntercomSwitch(PIKIntercomEntity, SwitchEntity):
         result = self._intercom.open()
         if not result:
             raise Exception("failed")
+        _LOGGER.info(f'Door {str(self._intercom)} open')
 
         now = dt_util.utcnow()
         self._assume_off = now + self._time
