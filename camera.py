@@ -16,6 +16,10 @@ from .entity import PIKIntercomEntity
 _LIVE_INTERVAL = datetime.timedelta(seconds=45)
 _LOGGER = logging.getLogger(__name__)
 _TIMEOUT = 15  # seconds
+RTSP_TRANSPORT = "rtsp_transport"
+
+# pik domofon hack
+RTSP_TRANS_PROTOCOL = "tcp"
 
 
 def setup_platform(hass, config, add_entities, discovery_info=None):
@@ -47,6 +51,7 @@ class PIKIntercomCamera(PIKIntercomEntity, Camera):
         """Initialize the camera on a PIKIntercom  device."""
         super().__init__(pik_intercom)
         self._stream_url = pik_intercom.video()
+        self.stream_options = {RTSP_TRANSPORT: RTSP_TRANS_PROTOCOL}
         self._last_image = None
         self.is_streaming = True
         self._supported_features = SUPPORT_STREAM if self._stream_url else 0
