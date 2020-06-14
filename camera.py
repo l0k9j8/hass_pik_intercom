@@ -3,6 +3,7 @@ import datetime
 import logging
 
 import aiohttp
+import asyncio
 import async_timeout
 
 from homeassistant.components.camera import SUPPORT_STREAM, Camera
