@@ -6,7 +6,6 @@ import uuid
 from requests import Request, Session
 
 from urllib.parse import urljoin, urlencode
-from pprint import pprint
 
 API_VERSION = '2'
 API_HOST = "https://intercom.pik-comfort.ru/api/"
@@ -87,3 +86,8 @@ class API:
                                    }
                                    )
         return data.get('request', False)
+    
+    def last_open(self):
+        last_open_intercoms_url = f'call_sessions/last_open'
+        data = self.__send_request('GET', last_open_intercoms_url, None)
+        return data

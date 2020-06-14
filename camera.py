@@ -24,7 +24,7 @@ RTSP_TRANS_PROTOCOL = "tcp"
 
 
 def setup_platform(hass, config, add_entities, discovery_info=None):
-    acc = hass.data[DOMAIN]['account']
+    acc = hass.data[DOMAIN]['account'].account
     intercoms = []
     entities = []
     for apart in acc.apartments():
@@ -91,3 +91,7 @@ class PIKIntercomCamera(PIKIntercomEntity, Camera):
                 "PIKIntercom %s: Error getting camera image: %s", self._name, error
             )
             return self._last_image
+    
+    @property
+    def model(self):
+        return "camera"

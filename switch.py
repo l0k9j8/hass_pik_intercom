@@ -16,7 +16,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 def setup_platform(hass, config, add_entities, discovery_info=None):
-    acc = hass.data[DOMAIN]['account']
+    acc = hass.data[DOMAIN]['account'].account
     intercoms = []
     entities = []
     for apart in acc.apartments():
@@ -79,3 +79,7 @@ class PIKIntercomSwitch(PIKIntercomEntity, SwitchEntity):
         if self._state and self._assume_off <= dt_util.utcnow():
             self._state = False
             self._assume_off = datetime.datetime.min
+    
+    @property
+    def model(self):
+        return "switch"

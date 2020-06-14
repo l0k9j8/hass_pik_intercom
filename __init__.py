@@ -1,5 +1,6 @@
 """The Intercom PIK integration. Private only usage"""
 import logging
+import threading
 
 import voluptuous as vol
 
@@ -37,6 +38,21 @@ def setup(hass: HomeAssistant, config: dict):
     password = conf[0].get(CONF_PASSWORD)
     dev_id = conf[0].get(CONF_DEV_ID)
 
-    hass.data[DOMAIN] = {'account': Account(login, password, dev_id)}
+    hass.data[DOMAIN] = {'account': PIKIntercomAccount(login, password, dev_id)}
 
     return True
+
+class PIKIntercomAccount:
+
+    def __init__(self, login, password, dev_id, update_interval=60):
+        self.__account = Account(login, password, dev_id)
+        self.__update_interval=update_interval
+        self.activity_loop()
+    
+    @property
+    def account(self):
+        return self.__account
+
+    def activity_loop(self):
+        self.__account.last_open()
+        threading.Timer(self.__update_interval, self.activity_loop).start()

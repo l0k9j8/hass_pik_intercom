@@ -10,6 +10,9 @@ class Account:
         for k, v in self._api.apartments().items():
             aparts.append(Apartment(self, v))
         return aparts
+    
+    def last_open(self):
+        return self._api.last_open()
 
 
 class Apartment:
