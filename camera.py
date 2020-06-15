@@ -51,6 +51,7 @@ class PIKIntercomCamera(PIKIntercomEntity, Camera):
     ):
         """Initialize the camera on a PIKIntercom  device."""
         super().__init__(pik_intercom)
+        self.__pik_intercom = pik_intercom
         self._stream_url = pik_intercom.video()
         self.stream_options = {RTSP_TRANSPORT: RTSP_TRANS_PROTOCOL}
         self._last_image = None
@@ -62,6 +63,9 @@ class PIKIntercomCamera(PIKIntercomEntity, Camera):
 
     async def stream_source(self):
         """Return the stream source."""
+        loop = asyncio.get_event_loop()
+        future_video_url = loop.run_in_executor(None, self.__pik_intercom.video)
+        self._stream_url = await future_video_url
         return self._stream_url
 
     @property

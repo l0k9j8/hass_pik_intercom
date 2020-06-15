@@ -37,8 +37,16 @@ class Apartment:
         api_intercoms = self.__account._api.intercoms(self.__id)
         result = []
         for k, v in api_intercoms.items():
-            result.append(Intercom(self, v))
+            result.append(Intercom(self, v['id'], v))
         return result
+    
+    def intercom_dict(self, id):
+        api_intercoms = self.__account._api.intercoms(self.__id)
+        result = None
+        for k, v in api_intercoms.items():
+            if v['id'] == id:
+                return v
+        return None
 
     def __str__(self):
         return f'{self.__street} {self.__house} {self.__room_number}'
@@ -49,9 +57,14 @@ class Apartment:
 
 class Intercom:
 
-    def __init__(self, apartment, intercom_dict):
+    def __init__(self, apartment, intercom_id, intercom_dict=None):
         self.__apartment = apartment
-        self.__id = intercom_dict['id']
+        self.__id = intercom_id
+        self.__load_intercom(intercom_dict)
+        
+    def __load_intercom(self, intercom_dict=None):
+        if intercom_dict is None:
+            intercom_dict = self.__apartment.intercom_dict(self.__id)
         self.__mode = intercom_dict['mode']
         self.__photo = intercom_dict.get('photo_url', None)
         self.__video = []
@@ -92,6 +105,7 @@ class Intercom:
         return self.__photo
 
     def video(self, quality=None):
+        self.__load_intercom()
         for v in self.__video:
             if quality is None:
                 return v['src']
