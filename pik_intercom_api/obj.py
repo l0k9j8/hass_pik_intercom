@@ -77,7 +77,6 @@ class Intercom:
             self.__sip = {
                 'enable': intercom_dict['sip_account']['ex_enable'],
                 'user': intercom_dict['sip_account']['ex_user'],
-                'password': intercom_dict['sip_account']['password'],
                 'proxy': intercom_dict['sip_account']['proxy'],
             }
         else:
