@@ -61,6 +61,8 @@ class API:
         apartments = {}
         for item in data.get('apartments', []):
             apartments[item['id']] = item
+        for item in data.get('parking_places', []):
+            apartments[item['id']] = item
         return apartments
 
     def building(self, building_id):
@@ -86,7 +88,7 @@ class API:
                                    }
                                    )
         return data.get('request', False)
-    
+
     def last_open(self):
         last_open_intercoms_url = f'call_sessions/last_open'
         data = self.__send_request('GET', last_open_intercoms_url, None)
