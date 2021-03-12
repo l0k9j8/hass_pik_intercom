@@ -63,6 +63,8 @@ class API:
             apartments[item['id']] = item
         for item in data.get('parking_places', []):
             apartments[item['id']] = item
+        for item in data.get('storerooms', []):
+            apartments[item['id']] = item
         return apartments
 
     def building(self, building_id):
