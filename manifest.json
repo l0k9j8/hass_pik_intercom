@@ -7,5 +7,6 @@
   "codeowners": [
     "@l0k9j8"
   ],
-  "config_flow": true
+  "config_flow": true,
+  "version": "0.0.2"
 }
